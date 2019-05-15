@@ -1,7 +1,7 @@
 
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import params from './src/params'
 import Field from './src/components/Field'
 
@@ -12,7 +12,11 @@ export default class App extends Component{
       <View style={styles.container}>
         <Text style={styles.welcome}>Testando </Text>
         <Text style={styles.instructions}>{params.getColumnsAmout()}x{params.getRowsAmount()}</Text>
-        
+        <Field/>
+        <Field opened/>
+        <Field opened nearMines={5}/>
+        <Field mined opened />
+        <Field mined opened exploded />
         
       </View>
     );
