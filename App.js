@@ -1,26 +1,58 @@
 
 
-import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import params from './src/params'
-import Field from './src/components/Field'
-import Flag from './src/components/Flag'
+import MineField from './src/components/MineField'
+import { createMinedBoard } from './src/functions'
 
-export default class App extends Component{
+
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = this.createState()
+  }
+
+  minesAmount = () => {
+    const rows = params.getRowsAmount()
+    const cols = params.getColumnsAmout()
+
+    return Math.ceil(cols * rows * params.dificultLevel)
+
+  }
+
+
+  createState = () => {
+    const rows = params.getRowsAmount()
+    const cols = params.getColumnsAmout()
+
+    return {
+      board: createMinedBoard(rows, cols, this.minesAmount())
+    }
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Testando </Text>
         <Text style={styles.instructions}>{params.getColumnsAmout()}x{params.getRowsAmount()}</Text>
-        <Field/>
-        <Field opened/>
+        <View>
+          <MineField board={this.state.board} />
+        </View>
+
+        {/*        <Field/>
+        <Field opened/>*
         <Field opened nearMines={5}/>
         <Field mined opened />
         <Field mined opened exploded />
         <Field flagged />
         <Field  opened/>
         <Field flagged bigger/>
-        <Flag bigger/>
+        <Flag bigger/>*/}
+
+
       </View>
     );
   }

@@ -6,8 +6,10 @@ import Mine from './Mine'
 import Flag from './Flag'
 
 export default (props) => {
-    const { mined, opened, nearMines, exploded , flagged } = props
+    const { mined, opened, exploded , flagged } = props
 
+    const nearMines = props.nearMines
+    
     const styleField = [styles.field]
 
     if (opened) styleField.push(styles.opened)
