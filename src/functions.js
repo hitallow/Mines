@@ -28,13 +28,14 @@ const spreadMines = (board, minesAmount)=>{
             minesPlanted ++
         }
     }
+    return board
 }
 
 
 const createMinedBoard = (rows , columns , minesAmount)=>{
     const board = createBoarder(rows, columns)
-    spreadMines(board , minesAmount)
-    return board
+    return spreadMines(board , minesAmount)
+    
 }
 
 export { createMinedBoard }
