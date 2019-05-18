@@ -19,14 +19,14 @@ export default (props) => {
         styleField.push(styles.regular)
     let color = null
     if (nearMines > 0) {
-        if (nearMines == 1) color = '#2a228d7'
+        if (nearMines == 1) color = '#2a28d7'
         else if (nearMines == 2) color = '#2b520f'
         else if (nearMines > 2 && nearMines < 6) color = '#f9060a'
         else if (nearMines >= 6) color = '#f2211a9'
     }
 
     return (
-        <TouchableWithoutFeedback onPress = {props.onOpen}>
+        <TouchableWithoutFeedback onPress={props.onOpen} onLongPress={props.onSelect}>
             <View style={styleField}>
                 {!mined && opened && nearMines > 0 ?
                     <Text style={[styles.label, { color: color }]}>{nearMines}
