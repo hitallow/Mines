@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import params from './src/params'
 import MineField from './src/components/MineField'
-import { createMinedBoard, cloneBoard, wonGame, openField, hasExplosion, showMines, invertFlag } from './src/functions'
+import Header from './src/components/Header'
+import { createMinedBoard, cloneBoard, wonGame, openField, hasExplosion, showMines, invertFlag, flagUsed } from './src/functions'
 
 
 export default class App extends Component {
@@ -39,62 +40,54 @@ export default class App extends Component {
     openField(board, row, column)
     const lost = hasExplosion(board)
     const won = wonGame(board)
-    if(lost){
+    if (lost) {
       showMines(board)
-      Alert.alert("Você perdeu","Você é muito burro")
+      Alert.alert("Você perdeu", "Você é muito burro")
     }
-    if(won){
-      Alert.alert("Você ganhou","Parabêns")
+    if (won) {
+      Alert.alert("Você ganhou", "Parabêns")
     }
     // usando chave valor igual
-    this.setState({ board , lost, won})
+    this.setState({ board, lost, won })
   }
-  onSelectField = (row, column) =>{
+  onSelectField = (row, column) => {
     const board = cloneBoard(this.state.board)
 
     invertFlag(board, row, column)
 
     const won = wonGame(board)
 
-    if(won){
-      Alert.alert("Parabêns","Você venceu o jogo")
+    if (won) {
+      Alert.alert("Parabêns", "Você venceu o jogo")
     }
     this.setState({
       board, won
     })
 
   }
-
+  restartGame = () => {
+    this.setState({ ...this.createState() })
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Testando </Text>
-        <Text style={styles.instructions}>{params.getColumnsAmout()}x{params.getRowsAmount()}</Text>
+        <Header newGame={() => this.restartGame()} flagsLeft={this.minesAmount() - flagUsed(this.state.board)} />
         <View>
           <MineField board={this.state.board} onOpenField={this.onOpenField} onSelectField={this.onSelectField} />
         </View>
-
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end'
+  },
+  board: {
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+    backgroundColor: '#AAA'
+  }
+})
